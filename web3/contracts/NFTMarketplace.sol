@@ -50,7 +50,7 @@ contract NFTMarketplace is ERC721URIStorage, Ownable {
 
     constructor(string memory _company, string memory _symbol, uint256 _royalityFee) ERC721(_company, _symbol) {
         royalityFee = _royalityFee;
-        siteOwner = msg.owner;
+        siteOwner = msg.sender;
     }
 
     function mintNFT(string memory _title, string memory _category, string memory _description, string memory _fileURI, uint256 _price) external payable {
@@ -117,7 +117,7 @@ contract NFTMarketplace is ERC721URIStorage, Ownable {
 
     function changePrice(uint256 _id, uint256 _newPrice) external returns(bool) {
 
-        require(newPrice > 0 ether, "New Price cannot be Zero");
+        require(_newPrice > 0 ether, "New Price cannot be Zero");
         require(msg.sender == minted[_id].nftOwner, "You are not the owner of this NFT, Try purchasing it.");
 
         minted[_id].price = _newPrice;
